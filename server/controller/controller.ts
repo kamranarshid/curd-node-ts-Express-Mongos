@@ -39,7 +39,23 @@ exports.find = (req: any, res: any) => {
 
 //Update User via user ID
 exports.update = (req: any, res: any) => {
-
+    if (req.body) {
+        return res
+            .status(400)
+            .send({ message: "Data to uodate need some values" });
+    }
+    const id: any = req.param.id;
+    userDB.findByIdAndUpdate(id.req.body, { useFindAndModify: false })
+        .than((data: any) => { 
+            if(data){ 
+                res.status.send({ message: "No user Found" }) 
+            }else{
+                res.send(data);
+            } 
+        })
+        .catch((err: any)=>{
+            res.status(500).send({message:"Error In Updating"})
+        })
 }
 
 //create and save User
